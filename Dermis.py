@@ -4,23 +4,25 @@ from PIL import Image, ImageTk
 from keras.models import Sequential
 from keras.models import model_from_json
 from keras.layers.normalization import BatchNormalization
-from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
+from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout, Activation
 from keras.preprocessing import image
 from keras.preprocessing.image import ImageDataGenerator
 import numpy as np
 from PIL import ImageFile
 import os
+from keras.callbacks import EarlyStopping
+from keras.callbacks import ModelCheckpoint
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 class Interface():
     
     def __init__(self):
-        
         try:
             Interface.CarregarModelo(self)
         except:
             pass
+        
         self.root = Tk()
 
         self.root.title("D E R M I S")
@@ -45,21 +47,32 @@ class Interface():
         label = Label(self.root, image = self.photo).grid(row=1,column = 0, padx = 15, pady = 5, rowspan= 3)
     
     def TreinaModelo(self):
+        
         self.rede = Sequential()
         
-        self.rede.add(Conv2D(64, (3,3), input_shape = (64,64,3), activation='relu'))
-        self.rede.add(BatchNormalization())
-        self.rede.add(MaxPooling2D(pool_size = (2,2)))
+        self.rede.add(Conv2D(16, (2, 2), input_shape = (64,64,3), activation='relu')) 
+        self.rede.add(MaxPooling2D(pool_size =(2, 2))) 
+          
+        self.rede.add(Conv2D(16, (2, 2), activation='relu')) 
+        self.rede.add(MaxPooling2D(pool_size =(2, 2))) 
+          
+        self.rede.add(Conv2D(32, (2, 2), activation='relu')) 
+ 
+        self.rede.add(MaxPooling2D(pool_size =(2, 2))) 
+        self.rede.add(Dropout(0.5)) 
+          
+        self.rede.add(Flatten()) 
+        self.rede.add(Dense(units= 16, activation='relu')) 
+        self.rede.add(Dropout(0.4)) 
+        self.rede.add(Dense(units = 16, activation='relu')) 
+        self.rede.add(Dropout(0.4))
+        self.rede.add(Dense(3)) 
+        self.rede.add(Activation('sigmoid')) 
         
-        self.rede.add(Flatten())
-
-
+        self.rede.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
         
-        self.rede.add(Dense(units=100, activation='relu'))
-        self.rede.add(Dense(units=100, activation='relu'))
-        self.rede.add(Dense( units=5, activation='softmax'))
-        
-        self.rede.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+        EarlyStop = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=50)
+        ModelSaving = ModelCheckpoint('best_model.h5', monitor='val_accuracy', mode='max', verbose=1, save_best_only = True)
         
         gerador_treinamento = ImageDataGenerator(rescale=1. / 255, rotation_range = 7, horizontal_flip = True, shear_range = 0.2, height_shift_range = 0.07, zoom_range = 0.2)
         
@@ -68,10 +81,10 @@ class Interface():
         base_treinamento = gerador_treinamento.flow_from_directory('Dataset/Treinamento', target_size = (64, 64), batch_size = 32, class_mode = 'categorical')
         base_teste = gerador_teste.flow_from_directory('Dataset/Teste', target_size = (64, 64), batch_size = 32, class_mode = 'categorical')
         
-        self.rede.fit_generator(base_treinamento, steps_per_epoch=20, epochs=3, validation_data = base_teste, validation_steps = 20)
+        self.rede.fit_generator(base_treinamento, steps_per_epoch=50, epochs=100, validation_data = base_teste, validation_steps = 20, callbacks =[ModelSaving])
         
-        
-        
+        Interface.SalvarModelo(self)
+            
     def ClassificarImagens(self):
        
         
@@ -86,34 +99,35 @@ class Interface():
         previsao = self.rede.predict(imagem_teste)
         
         print(previsao)
-        resultado = np.argmax(previsao,axis=1)
+        resultado = np.argmax(previsao,axis=1)[0]
         
-        Classes = ['Cicatriz','Sifilis','Melanoma','Pele normal','Verruga']
-
+       
+        Classes = ['Sifilis','Melanoma','Pele normal']
+        Resultado = str(Classes[resultado])
+        Porcentagem = "{:.1f}%".format(previsao[0][resultado] * 100)
         
-        Variavel = str(Classes[resultado[0]])
-        
-        Label(self.root, text=Variavel).grid(row=1,column=0)
+        Label(self.root, text=Porcentagem).grid(row=2,column=0)
+        Label(self.root, text=Resultado).grid(row=1,column=0)
         
             
     def SalvarModelo(self):
         model = self.rede
         model_json = model.to_json()
-        with open('modelTwo.json', 'w') as json_file:
+        with open('best_model.json', 'w') as json_file:
             json_file.write(model_json)
-        model.save_weights("modelTwo.h5")
+        model.save_weights("best_model.h5")
         print("Modelo salvo no disco")
             
     def CarregarModelo(self):
-        json_file = open('modelTwo.json', 'r')
+        json_file = open('best_model.json', 'r')
         loaded_model_json = json_file.read()
         json_file.close()
         loaded_model = model_from_json(loaded_model_json)
         
-        loaded_model.load_weights("modelTwo.h5")
+        loaded_model.load_weights("best_model.h5")
         print("Modelo carregado com sucesso")
         
-        loaded_model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+        loaded_model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
         self.rede = loaded_model
         
     
