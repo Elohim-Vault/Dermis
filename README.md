@@ -7,4 +7,5 @@ O que você vai precisar instalar antes de rodar o projeto?
 > Pillow - Uma biblioteca python para imagens bem bacanuda. 
   Keras - Biblioteca de rede neural super poderosa.
   TensorFlow - Biblioteca de machine learning super legal.
-<
+  Numpy - Biblioteca matemática do Python para suportar os nossos arrays multidimensionais.
+
