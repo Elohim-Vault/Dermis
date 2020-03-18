@@ -55,10 +55,26 @@ Como instalar as bibliotecas descritas acima para que você consiga rodar a apli
 ![dermis2](https://user-images.githubusercontent.com/55462130/76972013-c5f65280-690c-11ea-8b81-b9e61418d078.PNG)
 
 4. Clique em classificar.
-<img src=”https://user-images.githubusercontent.com/55462130/76972019-c7c01600-690c-11ea-8653-de8d4a85493f.PNG
-” width: 200px height: 200px>
-5. Voalá!
+
 ![dermis4](https://user-images.githubusercontent.com/55462130/76974149-9c8af600-690f-11ea-9b74-0bbd22333a48.PNG)
+
+5. Voalá!
+
+![dermis4](https://user-images.githubusercontent.com/55462130/76974149-9c8af600-690f-11ea-9b74-0bbd22333a48.PNG)
+
+
+# Conhecimentos obtidos com o projeto.
+- Como desenvolver e treinar uma IA.
+- Como trabalhar com imagens no Python.
+- Aprendendo a lidar com interface gráficas em Python.
+- Conceitos de estátistica.
+- Inserir e usar dados em JSON.
+- Como organizar o código para se obter melhor legibilidade.
+
+
+# Autores
+
+ - Gabriel Jeronimo Lima Silva
 
 
 
