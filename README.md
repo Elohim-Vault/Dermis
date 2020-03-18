@@ -45,6 +45,13 @@ Como instalar as bibliotecas descritas acima para que você consiga rodar a apli
 > conda install -c anaconda numpy
 
 # Testando a aplicação
+1 - Rode a aplicação na sua IDE favorita
+
+2 - Ao rodar está tela ira se abrir, clique em *selecionar imagem*
+
+![dermis1](https://user-images.githubusercontent.com/55462130/76972006-c393f880-690c-11ea-83ca-11656278108e.PNG)
+
+3 - 
 
 
 
