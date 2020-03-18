@@ -1,13 +1,19 @@
 # Dermis
 Dermis é um identificador de doenças de pele que utiliza Keras e Tensorflow para fazer suas predições baseada em imagens que são enviadas para ela. **Projeto em alpha**
 ## O nosso progresso
- [x] Desenvolver a interface desktop do software
- [x] Criar um banco para alimentar a aplicação.
- [x] Criar e treinar a rede neural.
- [x] Salvar o melhor treinamento da rede neural.
- [-]  Criar uma API.
- [-]  Desenvolver a aplicação mobile do projeto
- [-] **~~Dominar o mundo e colocar os humanos na matrix~~**
+ - [x] Desenvolver a interface desktop do software
+ 
+ - [x] Criar um banco para alimentar a aplicação.
+ 
+ - [x] Criar e treinar a rede neural.
+ 
+ - [x] Salvar o melhor treinamento da rede neural.
+ 
+ - [-]  Criar uma API.
+ 
+ - [-]  Desenvolver a aplicação mobile do projeto
+ 
+ - [-] ~~Dominar o mundo e colocar os humanos na matrix~~
 
 # Começando a usar
 Siga as instruções para copiar o projeto na sua maquina e começar a roda-lo. Se sinta a vontade para testar ou desenvolver algo em cima dele.
