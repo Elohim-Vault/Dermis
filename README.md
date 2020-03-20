@@ -56,7 +56,8 @@ Como instalar as bibliotecas descritas acima para que você consiga rodar a apli
 
 4. Clique em classificar.
 
-![dermis4](https://user-images.githubusercontent.com/55462130/76974149-9c8af600-690f-11ea-9b74-0bbd22333a48.PNG)
+![dermis3](https://user-images.githubusercontent.com/55462130/77174096-48af1700-6a9f-11ea-8ce0-63dc2f114bb6.PNG)
+
 
 5. Voalá!
 
